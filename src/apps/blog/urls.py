@@ -21,6 +21,6 @@ from apps.blog import views
 app_name = 'blog'
 urlpatterns = [
     path('', home, name='home'),
-    path('posts/create', views.blog_post_create),#BlogPostCreateFormView.as_view()),
-    path('posts/<int:post_id>/', views.detail_blog_post),
+    path('posts/create', views.blog_post_create, name='create_blog_post'),#BlogPostCreateFormView.as_view()),
+    path('posts/<int:post_id>/', views.detail_blog_post, name='detail_blog_post'),
 ]

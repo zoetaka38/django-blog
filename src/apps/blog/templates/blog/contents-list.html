@@ -19,7 +19,7 @@
                         </div>
                     </div>
                     <div class="card-action">
-                        <a href="/posts/{{ post.id }}">続きを読む</a>
+                        <a href="{% url 'blog:detail_blog_post' post_id=post.id %}">続きを読む</a>
                         <a href="#">{{ post.category }}</a>
                         <a href="#">{{ post.slug }}</a>
                     </div>
