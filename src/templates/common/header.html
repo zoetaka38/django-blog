@@ -1,0 +1,49 @@
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1, user-scalable=no">
+    {% include 'material/includes/material_css.html' %}
+    <script src="https://code.jquery.com/jquery-2.1.1.min.js"></script>
+    {% include 'material/includes/material_js.html' %}
+    <script>
+        document.addEventListener('DOMContentLoaded', function() {
+        var elems = document.querySelectorAll('.sidenav');
+        var instances = M.Sidenav.init(elems, {});
+        });
+    </script>
+    <title>{{title}}</title>
+    <!-- <link rel="shortcut icon" href="favicon.ico"> -->
+    <div class="navbar-fixed">
+        <nav>
+        <div class="nav-wrapper" style="padding-left: 10px">
+            <a href="#!" class="brand-logo" style="text-decoration:none">Django Blog</a>
+            <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+            <ul id="nav-mobile" class="right hide-on-med-and-down">
+                {% if user.is_authenticated %}
+                    <li>Hello, {{ user.username }}</li>
+                    <li><a class="lead" href="{% url 'users:logout' %}">Log out</a></li>
+                {% else %}
+                    <li><a class="lead" href="{% url 'users:login' %}">Log in</a></li>
+                {% endif %}
+                <li><a href="{% url 'blog:home' %}">トップページ</a></li>
+            </ul>
+            <form class=" hide-on-med-and-down" id="header-search" style="margin-left:200px;">
+                <div class="input-field" style="max-width: 400pt;">
+                    <input id="search" type="search" required>
+                    <label class="label-icon" for="search"><i class="material-icons">search</i></label>
+                    <i class="material-icons">close</i>
+                </div>
+            </form>
+        </div>
+        </nav>
+    </div>
+    <!-- サイドバー -->
+    <ul class="sidenav" id="mobile-demo">
+        {% if user.is_authenticated %}
+            <li>Hello, {{ user.username }}</li>
+            <li><a class="lead" href="{% url 'users:logout' %}">Log out</a></li>
+        {% else %}
+            <li><a class="lead" href="{% url 'users:login' %}">Log in</a></li>
+        {% endif %}       
+        <li><a href="{% url 'blog:home' %}">トップページ</a></li>
+    </ul>
+</head>

@@ -1,0 +1,45 @@
+<!DOCTYPE html>
+<html lang="ja">
+<head>
+  {% with "ログイン画面" as title %}
+    {% include "common/header.html" %}
+  {% endwith %}
+</head>
+{% load static %}
+<body>
+    <div class="container">
+        <div class="row" style="max-width: 700px;">
+            <div class="col s12 m12 valign">
+                <div class="card">
+                    <span class="card-title">Googleアカウントでログイン</span>
+                    <div align="center">
+                      <p>
+                        <a class="waves-effect waves-light btn-large" href="{% url 'social:begin' 'google-oauth2' %}">
+                            Login with Google
+                        </a>
+                      </p>
+                      <div align="right">
+                        <p>
+                          <a class="waves-effect waves-light btn-small" href="https://accounts.google.com/signup/v2/webcreateaccount?flowName=GlifWebSignIn&flowEntry=SignUp" target="_blank">
+                            <i class="material-icons left">cloud</i>
+                            Googleアカウント作成はこちら
+                          </a>
+                        </p>      
+                      </div>
+                    </div>
+                  <div align="center">
+                    <p><strong>-- OR --</strong></p>
+                    <h2>Login</h2>
+                    <form method="post">
+                      {% csrf_token %}
+                      {{ form.as_p }}
+                      <button type="submit">Login</button>
+                    </form>
+                    <br>                      
+                  </div>
+                </div>
+            </div>
+        </div>
+    </div>
+  </body>
+</html>

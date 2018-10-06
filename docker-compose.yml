@@ -1,0 +1,49 @@
+version: '3.4'
+
+volumes:
+  django-blog.db.volume:
+    name: django-blog.db.volume
+
+services:
+  nginx:
+    image: nginx:1.13
+    container_name: django-blog.nginx
+    ports:
+      - "8000:8000"
+    volumes:
+      - ./nginx/conf:/etc/nginx/conf.d
+      - ./nginx/uwsgi_params:/etc/nginx/uwsgi_params
+      - ./static:/static
+    depends_on:
+      - web
+
+  db:
+    image: mysql:5.7
+    container_name: django-blog.db
+    ports:
+      - 3306:3306
+    environment:
+      MYSQL_ROOT_PASSWORD: djangoblogpass
+      TZ: 'Asia/Tokyo'
+    volumes:
+      - django-blog.db.volume:/var/lib/mysql
+      - ./sql:/docker-entrypoint-initdb.d
+
+  web:
+    build: ./web
+    container_name: django-blog.web
+    command: uwsgi --socket :8001 --module config.wsgi
+    volumes:
+      - ./src:/code
+      - ./static:/static
+      - ./media:/media
+    expose:
+      - "8001"
+    depends_on:
+      - db
+    environment:
+      - TZ=Asia/Tokyo
+      - FLASK_DEBUG=1
+      - PYTHONDONTWRITEBYTECODE=1
+    env_file:
+      - web/envfiles/local.env
